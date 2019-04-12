@@ -1,5 +1,6 @@
 import java.io.File;
 
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -11,8 +12,11 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -32,7 +36,7 @@ public class UIHelper {
 		MenuItem fcAnimals = new MenuItem("Animals");
 		fcAnimals.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		    	VBox center = UIHelper.BuildFlashCardsContainer();
+		    	VBox center = UIHelper.BuildFlashCard(border, "HORSE");
 				border.setCenter(center);
 		    }
 		});
@@ -70,39 +74,54 @@ public class UIHelper {
 	
 	
 	
-	public static VBox BuildFlashCardsContainer() {
+	public static VBox BuildFlashCard(BorderPane border, String word) {
 		// create a vertical box container, which will be loaded into the center area
         VBox vb = new VBox();
         vb.setAlignment(Pos.CENTER);
         
-        // a button for fun
+        // a button to load a new card
         Button btn = new Button();
         btn.setText("Next");
         btn.setFont(new Font(24));
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-            	UIHelper.displayCard("CAT");
-                System.out.println("Hello World!");
+            	//UIHelper.displayCard("CAT");
+            	border.setCenter(UIHelper.BuildFlashCard(border, "CAT"));
             }
         });        
         
-        CardText = new Text(10, 50, "horse");
+          
+        
+        CardText = new Text(10, 50, word.toLowerCase());
         CardText.setFont(new Font(48));
         CardText.setWrappingWidth(300);
         CardText.setTextAlignment(TextAlignment.CENTER);
         
         
-        CardImageFile = new File("src/static/images/horse.jpg");
+        // defaults
+        CardImageFile = new File("src/static/images/" + word.toLowerCase() + ".jpg");
         CardImage = new Image(CardImageFile.toURI().toString(), 300, 0, true, false);
         CardImageView = new ImageView();
         CardImageView.setImage(CardImage);
         DropShadow ds = new DropShadow(5, Color.BLACK);
         CardImageView.setEffect(ds);
+        CardImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+		     @Override
+		     public void handle(MouseEvent event) {
+		    	 System.out.println("Image clicked");
+		    	 Media sound = new Media(new File("src/static/audio/" + word.toLowerCase()+ ".mp3").toURI().toString());
+		    	 MediaPlayer mediaPlayer = new MediaPlayer(sound);
+		    	 mediaPlayer.play();
+		         event.consume();
+		     }
+		});
+        
+        
         
         
         vb.getChildren().add(CardText);
-        vb.getChildren().add(CardImageView);
+        vb.getChildren().add(CardImageView);        
         vb.getChildren().add(btn);       
            
         VBox.setMargin(CardImageView, new Insets(20, 0, 20, 0));  // 20px padding above/below
@@ -116,25 +135,7 @@ public class UIHelper {
 	public static void BuildExercisesContainer() {
 		
 	}
-	
-	
-	// this method will display a new Flash Card based on a key passed in
-	// the key drives both the text and the image to be displayed
-	public static void displayCard(String cardKey) {
-		switch(cardKey) {
-			case "HORSE":
-				CardImageFile = new File("src/static/images/horse.jpg");
-				CardText.setText("horse");
-				break;
-			case "CAT":
-				CardImageFile = new File("src/static/images/cat.jpg");
-				CardText.setText("cat");				
-				break;
-		}
-		
-		CardImage = new Image(CardImageFile.toURI().toString(), 300, 0, true, false);
-		CardImageView.setImage(CardImage);
-	}
+
 	
 	
 }
