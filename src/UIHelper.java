@@ -1,5 +1,5 @@
 import java.io.File;
-
+import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -29,6 +29,7 @@ public class UIHelper {
 	public static ImageView CardImageView;	
 	public static File CardImageFile;
 	public static Text CardText;
+	public static ArrayList<Card> FlashCards;
 	
 	
 	public static MenuBar createMenu(BorderPane border) {

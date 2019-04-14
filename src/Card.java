@@ -1,5 +1,5 @@
 
 public class Card {
 	String word;
-	String ImageFileName = "";
+	String imgFileName;//renamed this to imgFileName, trying to create a conflict
 }
