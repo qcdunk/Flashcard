@@ -23,11 +23,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-
+import java.util.Collections;
 public class UIHelper {
 
 	
-	
+
 	public static ArrayList<Card> FlashCards;
 	
 	
@@ -101,6 +101,7 @@ public class UIHelper {
             public void handle(ActionEvent event) {
             	//UIHelper.displayCard("CAT");
             	border.setCenter(UIHelper.BuildFlashCard(border, "CAT"));
+            	
             }
         });        
         
