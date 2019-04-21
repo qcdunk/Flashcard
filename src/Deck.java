@@ -36,16 +36,16 @@ public class Deck {
 	}
 
 	//the following method shuffles the arrayList of cards
-	void shuffleDeck(Deck myDeck) {
+	public void shuffleDeck(Deck myDeck) {
 		Collections.shuffle(myDeck.getFlashCards());
 	}
 	
 	//method to return a deck of cards from the animal category
-	ArrayList<Card> deckByCategory(ArrayList<Card> allCards, String category) {
+	public ArrayList<Card> deckByCategory(String category) {
 		ArrayList<Card> cardsByCategory = new ArrayList<Card>();
 		
 		//here we assign cards from a particular category to a new deck of cards
-		for (Card card : allCards) {
+		for (Card card : flashCards) {
 			if (card.getCategory().equals(category)) {
 				cardsByCategory.add(card);
 			}

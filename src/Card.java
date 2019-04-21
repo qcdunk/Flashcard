@@ -4,12 +4,14 @@ public class Card {
 	private String imageFileName;
 	private String audioFileName;
 	private String category;
+	private int leitnerIdx; //each card would have a leitner index
 	
 	public Card (String word, String imageFileName, String audioFileName, String category) {
 		this.word = word;
 		this.imageFileName = imageFileName;
 		this.audioFileName = audioFileName;
 		this.category = category;
+		leitnerIdx = 1; //we set the leitner index to 1 when we initially create a card
 	}
 
 	public String getWord() {
@@ -26,6 +28,10 @@ public class Card {
 
 	public String getCategory() {
 		return category;
+	}
+	
+	public int getLeitnerIdx() {
+		return leitnerIdx;
 	}
 	
 	

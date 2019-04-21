@@ -28,7 +28,7 @@ public class UIHelper {
 
 	
 
-	public static ArrayList<Card> FlashCards;
+	//public static ArrayList<Card> FlashCards;
 	
 	
 	public static MenuBar createMenu(BorderPane border) {
