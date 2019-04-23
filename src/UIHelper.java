@@ -106,7 +106,7 @@ public class UIHelper {
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-            	if (CurrentFlashCard < FlashCards.size()-1) {
+            	if (CurrentFlashCard < FlashCards.size()-2) {
         			CurrentFlashCard++;
         		} else {
         			// re-shuffle/reset
