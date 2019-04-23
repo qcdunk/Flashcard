@@ -67,6 +67,7 @@ public class UIHelper {
 		    	ActiveCategory = "animals";
 				FlashCards = d.deckByCategory(ActiveCategory, true);
 				CurrentFlashCard = 0;
+				ExercisePoints = 0;
 				ArrayList<Card> choices = d.choicesByCategory(FlashCards.get(CurrentFlashCard), ActiveCategory, true);
 		    	VBox center = UIHelper.BuildDrillCard(border, FlashCards.get(CurrentFlashCard), choices);
 				border.setCenter(center);
@@ -210,6 +211,7 @@ public class UIHelper {
     		    	 // IF CORRECT, ADD POINTS, HIDE INCORRECT CHOICES, PLAY SPEECH "CORRECT! [WORD]", 
     		    	 if (imagePath.contains(FlashCards.get(CurrentFlashCard).getImageFileName())) {
     		    		 System.out.println("CORRECT");
+    		    		 ExercisePoints++;
     		    	 }
     		    	 else {
     		    	 // IF INCORRECT, HIDE INCORRECT CHOICES, PLAY SPEECH "INCORRECT, [WORD]"
