@@ -41,7 +41,7 @@ public class Deck {
 	}
 	
 	//method to return a deck of cards from the animal category
-	public ArrayList<Card> deckByCategory(String category) {
+	public ArrayList<Card> deckByCategory(String category, boolean shuffleDeck) {
 		ArrayList<Card> cardsByCategory = new ArrayList<Card>();
 		
 		//here we assign cards from a particular category to a new deck of cards
@@ -50,6 +50,11 @@ public class Deck {
 				cardsByCategory.add(card);
 			}
 		}
+		
+		if (shuffleDeck) {
+			Collections.shuffle(cardsByCategory);
+		}
+		
 		return cardsByCategory;
 	}
 	

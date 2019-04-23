@@ -28,7 +28,8 @@ public class UIHelper {
 
 	
 
-	//public static ArrayList<Card> FlashCards;
+	public static ArrayList<Card> FlashCards;
+	public static int CurrentFlashCard = 0;
 	
 	
 	public static MenuBar createMenu(BorderPane border) {
@@ -36,7 +37,10 @@ public class UIHelper {
 		MenuItem fcAnimals = new MenuItem("Animals");
 		fcAnimals.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		    	VBox center = UIHelper.BuildFlashCard(border, "HORSE");
+		    	Deck d = new Deck();
+				FlashCards = d.deckByCategory("animals", true);
+				CurrentFlashCard = 0;
+		    	VBox center = UIHelper.BuildFlashCard(border, FlashCards.get(CurrentFlashCard));
 				border.setCenter(center);
 		    }
 		});
@@ -79,8 +83,11 @@ public class UIHelper {
 	
 	
 	
+
 	
-	public static VBox BuildFlashCard(BorderPane border, String word) {
+	
+	
+	public static VBox BuildFlashCard(BorderPane border, Card word) {
 		
 		
 		Image CardImage;
@@ -99,22 +106,28 @@ public class UIHelper {
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-            	//UIHelper.displayCard("CAT");
-            	border.setCenter(UIHelper.BuildFlashCard(border, "CAT"));
-            	
+            	if (CurrentFlashCard < FlashCards.size()-1) {
+        			CurrentFlashCard++;
+        		} else {
+        			// re-shuffle/reset
+        			CurrentFlashCard = 0;
+        			Collections.shuffle(FlashCards);
+        		}
+            	border.setCenter(UIHelper.BuildFlashCard(border, FlashCards.get(CurrentFlashCard)));
+				
             }
         });        
         
           
         
-        CardText = new Text(10, 50, word.toLowerCase());
+        CardText = new Text(10, 50, word.getWord().toLowerCase());
         CardText.setFont(new Font(48));
         CardText.setWrappingWidth(300);
         CardText.setTextAlignment(TextAlignment.CENTER);
         
         
         // defaults
-        CardImageFile = new File("src/static/images/" + word.toLowerCase() + ".jpg");
+        CardImageFile = new File("src/static/images/" + word.getWord().toLowerCase() + ".jpg");
         CardImage = new Image(CardImageFile.toURI().toString(), 300, 0, true, false);
         CardImageView = new ImageView();
         CardImageView.setImage(CardImage);
@@ -124,7 +137,7 @@ public class UIHelper {
 		     @Override
 		     public void handle(MouseEvent event) {
 		    	 System.out.println("Image clicked");
-		    	 Media sound = new Media(new File("src/static/audio/" + word.toLowerCase()+ ".mp3").toURI().toString());
+		    	 Media sound = new Media(new File("src/static/audio/" + word.getWord().toLowerCase()+ ".mp3").toURI().toString());
 		    	 MediaPlayer mediaPlayer = new MediaPlayer(sound);
 		    	 mediaPlayer.play();
 		         event.consume();
