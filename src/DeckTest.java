@@ -36,7 +36,7 @@ class DeckTest {
 		animalDeck.add(card11);
 		
 		//test deck should only contain card 1 and 2 (animal cards) after calling the method deckByCategory
-		testDeck = myDeck.deckByCategory("animals");
+		testDeck = myDeck.deckByCategory("animals", false);
 		
 		for (int x = 0; x < 10; x++) {
 			assertEquals(animalDeck.get(x).getWord(), testDeck.get(x).getWord());
