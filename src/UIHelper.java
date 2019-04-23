@@ -30,6 +30,8 @@ public class UIHelper {
 
 	public static ArrayList<Card> FlashCards;
 	public static int CurrentFlashCard = 0;
+	public static int ExercisePoints = 0;
+	public static String ActiveCategory = "";
 	
 	
 	public static MenuBar createMenu(BorderPane border) {
@@ -38,7 +40,8 @@ public class UIHelper {
 		fcAnimals.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
 		    	Deck d = new Deck();
-				FlashCards = d.deckByCategory("animals", true);
+		    	ActiveCategory = "animals";
+				FlashCards = d.deckByCategory(ActiveCategory, true);
 				CurrentFlashCard = 0;
 		    	VBox center = UIHelper.BuildFlashCard(border, FlashCards.get(CurrentFlashCard));
 				border.setCenter(center);
@@ -60,7 +63,12 @@ public class UIHelper {
 		MenuItem exAnimals = new MenuItem("Animals");
 		exAnimals.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		    	VBox center = UIHelper.BuildDrillCard(border, "HORSE", new String[] {"HORSE", "CAT", "HORSE", "CAT"});
+		    	Deck d = new Deck();
+		    	ActiveCategory = "animals";
+				FlashCards = d.deckByCategory(ActiveCategory, true);
+				CurrentFlashCard = 0;
+				ArrayList<Card> choices = d.choicesByCategory(FlashCards.get(CurrentFlashCard), ActiveCategory, true);
+		    	VBox center = UIHelper.BuildDrillCard(border, FlashCards.get(CurrentFlashCard), choices);
 				border.setCenter(center);
 		    }
 		});
@@ -159,14 +167,14 @@ public class UIHelper {
 	
 	
 	
-	public static VBox BuildDrillCard(BorderPane border, String word, String[] options) {
+	public static VBox BuildDrillCard(BorderPane border, Card word, ArrayList<Card> options) {
 		
 		// create a vertical box container, which will be loaded into the center area
         VBox vb = new VBox();
         vb.setAlignment(Pos.CENTER);
         
         Text CardText;
-        CardText = new Text(10, 30, word.toLowerCase());
+        CardText = new Text(10, 30, word.getWord().toLowerCase());
         CardText.setFont(new Font(48));
         CardText.setWrappingWidth(300);
         CardText.setTextAlignment(TextAlignment.CENTER);
@@ -180,11 +188,11 @@ public class UIHelper {
         flow.setStyle("-fx-background-color: DAE6F3;");
         
         
-        for(int i=0; i< options.length; i++) {
+        for(int i=0; i< options.size(); i++) {
         	Image CardImage;
     		ImageView CardImageView;	
     		File CardImageFile;
-    		String optionWord = options[i];
+    		String optionWord = options.get(i).getWord();
         	
         	// defaults
             CardImageFile = new File("src/static/images/" + optionWord.toLowerCase() + ".jpg");
@@ -196,11 +204,35 @@ public class UIHelper {
             CardImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
     		     @Override
     		     public void handle(MouseEvent event) {
-    		    	 System.out.println("Image clicked");
-    		    	 Media sound = new Media(new File("src/static/audio/" + optionWord.toLowerCase()+ ".mp3").toURI().toString());
-    		    	 MediaPlayer mediaPlayer = new MediaPlayer(sound);
-    		    	 mediaPlayer.play();
-    		         event.consume();
+    		    	 
+    		    	 ImageView iv = (ImageView)event.getSource();
+    		    	 String imagePath = iv.getImage().impl_getUrl();
+    		    	 // IF CORRECT, ADD POINTS, HIDE INCORRECT CHOICES, PLAY SPEECH "CORRECT! [WORD]", 
+    		    	 if (imagePath.contains(FlashCards.get(CurrentFlashCard).getImageFileName())) {
+    		    		 System.out.println("CORRECT");
+    		    	 }
+    		    	 else {
+    		    	 // IF INCORRECT, HIDE INCORRECT CHOICES, PLAY SPEECH "INCORRECT, [WORD]"
+    		    		 System.out.println("INCORRECT"); 
+    		    	 }
+    		    	 
+    		    	 if (CurrentFlashCard < FlashCards.size()-2) {
+    	        			CurrentFlashCard++;
+    	        			border.setCenter(UIHelper.BuildFlashCard(border, FlashCards.get(CurrentFlashCard)));
+        					
+        	            	Deck d = new Deck();
+        					ArrayList<Card> choices = d.choicesByCategory(FlashCards.get(CurrentFlashCard), ActiveCategory, true);
+        			    	VBox center = UIHelper.BuildDrillCard(border, FlashCards.get(CurrentFlashCard), choices);
+        					border.setCenter(center);
+    	        		} else {
+    	        			// HIDE CHOICES
+    	        			//flow.getChildren().remove(0, 3);
+    	        			// SHOW FINAL SCORE
+    	        		}
+    	            	
+    	            	
+    	            	
+    	            	
     		     }
     		});
             

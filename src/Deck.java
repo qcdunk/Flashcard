@@ -58,4 +58,25 @@ public class Deck {
 		return cardsByCategory;
 	}
 	
+	//method to return 4 exercise choice options from a category
+	public ArrayList<Card> choicesByCategory(Card activeCard, String category, boolean shuffleDeck) {
+		ArrayList<Card> cardsByCategory = new ArrayList<Card>();
+		
+		for (Card card : flashCards) {
+			if (card.getCategory().equals(category) && card.getWord().equals(activeCard.getWord()) == false) {
+				cardsByCategory.add(card);
+			}
+		}
+		
+		// pre-shuffle without active card
+		Collections.shuffle(cardsByCategory);
+		// pull 3 random cards
+		ArrayList<Card> newCards = new ArrayList<Card>(cardsByCategory.subList(0, 3));
+		newCards.add(activeCard);
+		// post-shuffle with active card
+		Collections.shuffle(cardsByCategory);
+		
+		return newCards;
+	}
+	
 }
