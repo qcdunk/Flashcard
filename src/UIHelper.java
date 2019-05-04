@@ -1,10 +1,13 @@
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -15,7 +18,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -220,17 +222,28 @@ public class UIHelper {
     		    	 
     		    	 if (CurrentFlashCard < FlashCards.size()-2) {
     	        			CurrentFlashCard++;
-    	        			border.setCenter(UIHelper.BuildFlashCard(border, FlashCards.get(CurrentFlashCard)));
-        					
+    	        			
         	            	Deck d = new Deck();
         					ArrayList<Card> choices = d.choicesByCategory(FlashCards.get(CurrentFlashCard), ActiveCategory, true);
         			    	VBox center = UIHelper.BuildDrillCard(border, FlashCards.get(CurrentFlashCard), choices);
         					border.setCenter(center);
-    	        		} else {
-    	        			// HIDE CHOICES
-    	        			//flow.getChildren().remove(0, 3);
-    	        			// SHOW FINAL SCORE
-    	        		}
+	        		 } else {
+		        			// HIDE CHOICES
+		        			//flow.getChildren().remove(0, 3);
+		        			// SHOW FINAL SCORE
+		        			System.out.println("Points: " + ExercisePoints);
+		        			System.out.println("Total Cards: " + (CurrentFlashCard+1)); 
+		        			double score = ((ExercisePoints+0.0)/(CurrentFlashCard+1))*100;
+		        			DecimalFormat df = new DecimalFormat("###");
+		        			String stringScore = df.format(score);
+		        			
+		        			Alert alert = new Alert(AlertType.INFORMATION);
+		        			alert.setTitle("Information Dialog");
+		        			alert.setHeaderText(null);
+		        			alert.setContentText("Your score is... " +  stringScore + "%");
+	
+		        			alert.showAndWait();
+	        		 }
     	            	
     	            	
     	            	

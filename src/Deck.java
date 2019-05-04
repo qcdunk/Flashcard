@@ -76,7 +76,7 @@ public class Deck {
 		return leitnerDeck;
 	}
 	
-	//method to return a deck of cards from the animal category
+	//method to return a deck of cards from a category
 	public ArrayList<Card> deckByCategory(String category, boolean shuffleDeck) {
 		ArrayList<Card> cardsByCategory = new ArrayList<Card>();
 		
@@ -109,7 +109,7 @@ public class Deck {
 		ArrayList<Card> newCards = new ArrayList<Card>(cardsByCategory.subList(0, 3));
 		newCards.add(activeCard);
 		// post-shuffle with active card
-		Collections.shuffle(cardsByCategory);
+		Collections.shuffle(newCards);
 		
 		return newCards;
 	}
