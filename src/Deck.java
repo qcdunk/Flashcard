@@ -1,5 +1,8 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 public class Deck {
 	//create an empty ArrayList of the Card object
@@ -9,30 +12,32 @@ public class Deck {
 		return flashCards;
 	}
 	
+	/*
+	 * the deck constructor will read from a file named "cards"
+	 * and creates a deck of cards based on inputs in the file
+	 */
 	public Deck () {
-		Card card1 = new Card ("horse", "horse", "horse", "animals");
-		Card card2 = new Card ("cat", "cat", "cat", "animals");
-		Card card3 = new Card ("tiger", "tiger", "tiger", "animals");
-		Card card4 = new Card ("flower", "flower", "flower", "nature");//this is NOT from the animals category, used as a test
-		Card card5 = new Card ("dog", "dog", "dog", "animals");
-		Card card6 = new Card ("fish", "fish", "fish", "animals");
-		Card card7 = new Card ("rabbit", "rabbit", "rabbit", "animals");
-		Card card8 = new Card ("mouse", "mouse", "mouse", "animals");
-		Card card9 = new Card ("koala", "koala", "koala", "animals");
-		Card card10 = new Card ("panda", "panda", "panda", "animals");
-		Card card11 = new Card ("kangaroo", "fiskangarooh", "kangaroo", "animals");
-
-		flashCards.add(card1);
-		flashCards.add(card2);
-		flashCards.add(card3);
-		flashCards.add(card4);
-		flashCards.add(card5);
-		flashCards.add(card6);
-		flashCards.add(card7);
-		flashCards.add(card8);
-		flashCards.add(card9);
-		flashCards.add(card10);
-		flashCards.add(card11);
+		File f = new File ("cards");
+		try {
+			Scanner scanner = new Scanner(f);
+			while (scanner.hasNextLine()) {
+				//read lines in
+				String Row = scanner.nextLine();
+				
+				String[] columnData = Row.split(",");
+				
+				//here we parsed data and store in a card object
+				String cardName = columnData[0];
+				String category = columnData[1];
+				int idx =  Integer.parseInt(columnData[2]);
+				Card card = new Card (cardName, cardName, cardName, category, idx);
+				//adding card object to a list, forming a deck
+				flashCards.add(card);
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	//the following method shuffles the arrayList of cards
