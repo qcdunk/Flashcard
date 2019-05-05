@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class ScoreCalculator {
 	/*	
-	 * Percentage of occurence of cards during the excercise activity
+	 * Percentage of occurrence of cards during the exercise activity
 	 * index 1 = 100%
 	 * index 2 = 60%
 	 * index 3 = 30%
