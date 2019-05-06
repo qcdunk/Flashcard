@@ -2,6 +2,8 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -213,12 +215,33 @@ public class UIHelper {
     		    	 // IF CORRECT, ADD POINTS, HIDE INCORRECT CHOICES, PLAY SPEECH "CORRECT! [WORD]", 
     		    	 if (imagePath.contains(FlashCards.get(CurrentFlashCard).getImageFileName())) {
     		    		 System.out.println("CORRECT");
+    		    		 Media soundCorrectSound = new Media(new File("src/static/audio/correct_sound.wav").toURI().toString());
+    		    		 Media soundCorrect = new Media(new File("src/static/audio/correct.mp3").toURI().toString());
+    			    	 Media soundWord = new Media(new File("src/static/audio/" + word.getWord().toLowerCase()+ ".mp3").toURI().toString());
+    			    	 
+    			    	 ObservableList<Media> mediaList = FXCollections.observableArrayList();
+    			         mediaList.addAll(soundCorrectSound, soundCorrect, soundWord);
+    			    	 playSounds(mediaList);     			    	      
     		    		 ExercisePoints++;
     		    	 }
     		    	 else {
     		    	 // IF INCORRECT, HIDE INCORRECT CHOICES, PLAY SPEECH "INCORRECT, [WORD]"
     		    		 System.out.println("INCORRECT"); 
+    		    		 Media soundIncorrectSound = new Media(new File("src/static/audio/incorrect_sound.wav").toURI().toString());
+    		    		 Media soundIncorrect = new Media(new File("src/static/audio/incorrect.mp3").toURI().toString());
+    			    	 Media soundWord = new Media(new File("src/static/audio/" + word.getWord().toLowerCase()+ ".mp3").toURI().toString());
+    			    	 
+    			    	 ObservableList<Media> mediaList = FXCollections.observableArrayList();
+    			         mediaList.addAll(soundIncorrectSound, soundIncorrect, soundWord);
+    			    	 playSounds(mediaList); 
     		    	 }
+    		    	 
+    		    	 try {
+    		    		 Thread.sleep(1000);
+    		    	 } catch (Exception ex) {
+    		    		 
+    		    	 }
+    		    	 
     		    	 
     		    	 if (CurrentFlashCard < FlashCards.size()-2) {
     	        			CurrentFlashCard++;
@@ -265,5 +288,19 @@ public class UIHelper {
 	}
 
 	
+	private static void playSounds(ObservableList<Media> mediaList) {
+        if (mediaList.size() == 0)
+            return;
+
+        MediaPlayer mediaplayer = new MediaPlayer(mediaList.remove(0));
+        mediaplayer.play();
+
+        mediaplayer.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                playSounds(mediaList);
+            }
+        });
+    }
 	
 }
