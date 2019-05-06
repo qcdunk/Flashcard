@@ -43,20 +43,32 @@ public class UIHelper {
 		MenuItem fcAnimals = new MenuItem("Animals");
 		fcAnimals.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		    	Deck d = new Deck();
 		    	ActiveCategory = "animals";
-				FlashCards = d.deckByCategory(ActiveCategory, true);
-				CurrentFlashCard = 0;
-		    	VBox center = UIHelper.BuildFlashCard(border, FlashCards.get(CurrentFlashCard));
-				border.setCenter(center);
+		    	showFlashCards(border);
 		    }
-		});
-		
-		
+		});	
 		
 		MenuItem fcFood = new MenuItem("Food");
+		fcFood.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	ActiveCategory = "food";
+		    	showFlashCards(border);
+		    }
+		});
 		MenuItem fcPeople = new MenuItem("People");
+		fcPeople.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	ActiveCategory = "people";
+		    	showFlashCards(border);
+		    }
+		});
 		MenuItem fcNature = new MenuItem("Nature");
+		fcNature.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	ActiveCategory = "nature";
+		    	showFlashCards(border);
+		    }
+		});
 		menuFlashCards.getItems().add(fcAnimals);
 		menuFlashCards.getItems().add(fcFood);
 		menuFlashCards.getItems().add(fcPeople);
@@ -67,19 +79,31 @@ public class UIHelper {
 		MenuItem exAnimals = new MenuItem("Animals");
 		exAnimals.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		    	Deck d = new Deck();
 		    	ActiveCategory = "animals";
-				FlashCards = d.deckByCategory(ActiveCategory, true);
-				CurrentFlashCard = 0;
-				ExercisePoints = 0;
-				ArrayList<Card> choices = d.choicesByCategory(FlashCards.get(CurrentFlashCard), ActiveCategory, true);
-		    	VBox center = UIHelper.BuildDrillCard(border, FlashCards.get(CurrentFlashCard), choices);
-				border.setCenter(center);
+		    	showDrillCards(border);
 		    }
 		});
 		MenuItem exFood = new MenuItem("Food");
+		exFood.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	ActiveCategory = "food";
+		    	showDrillCards(border);
+		    }
+		});
 		MenuItem exPeople = new MenuItem("People");
+		exPeople.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	ActiveCategory = "people";
+		    	showDrillCards(border);
+		    }
+		});
 		MenuItem exNature = new MenuItem("Nature");
+		exNature.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	ActiveCategory = "nature";
+		    	showDrillCards(border);
+		    }
+		});
 		menuExercises.getItems().add(exRandom);
 		menuExercises.getItems().add(exAnimals);
 		menuExercises.getItems().add(exFood);
@@ -96,7 +120,26 @@ public class UIHelper {
 	
 	
 	
-
+	
+	public static void showFlashCards(BorderPane border) {
+		Deck d = new Deck();
+		FlashCards = d.deckByCategory(ActiveCategory, true);
+		CurrentFlashCard = 0;
+    	VBox center = UIHelper.BuildFlashCard(border, FlashCards.get(CurrentFlashCard));
+		border.setCenter(center);
+	}
+	
+	
+	public static void showDrillCards(BorderPane border) {
+		Deck d = new Deck();
+    	FlashCards = d.deckByCategory(ActiveCategory, true);
+		CurrentFlashCard = 0;
+		ExercisePoints = 0;
+		ArrayList<Card> choices = d.choicesByCategory(FlashCards.get(CurrentFlashCard), ActiveCategory, true);
+    	VBox center = UIHelper.BuildDrillCard(border, FlashCards.get(CurrentFlashCard), choices);
+		border.setCenter(center);
+		
+	}
 	
 	
 	
@@ -236,11 +279,7 @@ public class UIHelper {
     			    	 playSounds(mediaList); 
     		    	 }
     		    	 
-    		    	 try {
-    		    		 Thread.sleep(1000);
-    		    	 } catch (Exception ex) {
-    		    		 
-    		    	 }
+    		    	 
     		    	 
     		    	 
     		    	 if (CurrentFlashCard < FlashCards.size()-2) {
