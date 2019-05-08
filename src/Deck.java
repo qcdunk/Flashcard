@@ -82,7 +82,7 @@ public class Deck {
 		
 		//here we assign cards from a particular category to a new deck of cards
 		for (Card card : flashCards) {
-			if (card.getCategory().equals(category)) {
+			if (category.equals("random") || card.getCategory().equals(category)) {
 				cardsByCategory.add(card);
 			}
 		}
@@ -98,7 +98,7 @@ public class Deck {
 		ArrayList<Card> cardsByCategory = new ArrayList<Card>();
 		
 		for (Card card : flashCards) {
-			if (card.getCategory().equals(category) && card.getWord().equals(activeCard.getWord()) == false) {
+			if ((category.equals("random") || card.getCategory().equals(category)) && card.getWord().equals(activeCard.getWord()) == false) {
 				cardsByCategory.add(card);
 			}
 		}

@@ -76,6 +76,12 @@ public class UIHelper {
 
 		Menu menuExercises = new Menu("Exercises");
 		MenuItem exRandom = new MenuItem("Random");
+		exRandom.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	ActiveCategory = "random";
+		    	showDrillCards(border);
+		    }
+		});
 		MenuItem exAnimals = new MenuItem("Animals");
 		exAnimals.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
