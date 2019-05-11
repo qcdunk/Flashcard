@@ -8,7 +8,7 @@ class DeckTest {
 
 	@Test
 	void testDeckByCategory() {
-		/*
+		
 		Deck myDeck = new Deck();
 		ArrayList<Card> animalDeck = new ArrayList<Card>();
 		ArrayList<Card> testDeck = new ArrayList<Card>();
@@ -16,7 +16,7 @@ class DeckTest {
 		Card card1 = new Card ("horse", "horse", "horse", "animals",1);
 		Card card2 = new Card ("cat", "cat", "cat", "animals",1);
 		Card card3 = new Card ("tiger", "tiger", "tiger", "animals",1);
-		Card card4 = new Card ("flower", "flower", "flower", "nature",1);//this is NOT from the animals category, used as a test
+		Card card4 = new Card ("crocodile", "crocodile", "crocodile", "animals",1);
 		Card card5 = new Card ("dog", "dog", "dog", "animals",1);
 		Card card6 = new Card ("fish", "fish", "fish", "animals",1);
 		Card card7 = new Card ("rabbit", "rabbit", "rabbit", "animals",1);
@@ -28,6 +28,7 @@ class DeckTest {
 		animalDeck.add(card1);
 		animalDeck.add(card2);
 		animalDeck.add(card3);
+		animalDeck.add(card4);
 		animalDeck.add(card5);
 		animalDeck.add(card6);
 		animalDeck.add(card7);
@@ -41,7 +42,7 @@ class DeckTest {
 		
 		for (int x = 0; x < 10; x++) {
 			assertEquals(animalDeck.get(x).getWord(), testDeck.get(x).getWord());
-		}*/	
+		}
 	}
 
 }
